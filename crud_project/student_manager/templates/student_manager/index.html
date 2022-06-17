@@ -1,0 +1,16 @@
+{% extends 'student_manager/base.html' %}
+<!-- {% load static %} -->
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-4">
+        <h3 class="text-center alert alert-info">This is heading one</h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Add" class="btn btn-success">
+        </form>
+    </div>
+</div>
+{% endblock content %}
+    
