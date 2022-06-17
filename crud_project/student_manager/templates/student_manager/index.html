@@ -11,6 +11,51 @@
             <input type="submit" value="Add" class="btn btn-success">
         </form>
     </div>
+    <div class="col-sm-7 offset-1">
+        <h3 class="text-center alert alert-info">Students In Our Database</h3>
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Password</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                
+                {% if students_info %}
+                    {% for student in students_info %}
+                    <tr>
+                        <th scope="row">{{student.id}}</th>
+                        <td>{{student.name}}</td>
+                        <td>{{student.email}}</td>
+                        <td>{{student.password}}</td>
+                        <td>
+                            <a href="{% url 'update_data' student.id %}" class="btn btn-sm btn-info">Edit</a>
+                            <form class="d-inline" action="{% url 'delete_data' student.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Delete" class="btn btn-sm btn-danger">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                <tr>
+                    <th scope="row">-</th>
+                    <td>No Record</td>
+                    <td>No Record</td>
+                    <td>No Record</td>
+                </tr>
+                {% endif %}
+                    
+
+                
+              
+            </tbody>
+          </table>
+    </div>
 </div>
 {% endblock content %}
     

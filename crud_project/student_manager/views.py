@@ -19,15 +19,32 @@ def home(request):
     else:
         form = StudentRegistration()
 
+    info = Student.objects.all()
     context = {
-        'form': form
+        'form': form,
+        'students_info': info
     }
     return render(request, 'student_manager/index.html', context)
 
 
-def delete_data(request, stu_id):
-    pass
+def update_data(request, id):
+    stu_object = Student.objects.get(pk=id)
+    if request.method == "POST":
+        new_info = StudentRegistration(request.POST, instance=stu_object)
+        if new_info.is_valid():
+            new_info.save()
+            return redirect('home')
+    else:
+        stu_info = StudentRegistration(instance=stu_object)
+    context = {
+        'form': stu_info,
+    }
+    return render(request, 'student_manager/update.html', context)
 
 
-def update_data(request, stu_id):
-    pass
+def delete_data(request, id):
+    if request.method == "POST":
+        del_student = Student.objects.get(pk=id)
+        # print(del_student.name)
+        del_student.delete()
+        return redirect('home')
